@@ -35,7 +35,7 @@ class ScheduleController extends Controller
       $dtTahun = rtrim($dt->tahun, $dt->semester);
       $sc = array(
         'id' => $dt->id_tahun,
-        'name' => $dtTahun.' Semester '.$dt->semester,
+        'name' => $dtTahun.' Semester '.@$dt->semester_huruf,
         'desc' => $dt->nama,
         'status' => $dt->proses_buka
       );
