@@ -32,10 +32,10 @@ class ScheduleController extends Controller
     $dataTahun = Tahun::get();
     $schedule = [];
     foreach($dataTahun as $dt){
-      $dtTahun = rtrim($dt->tahun, $dt->semester);
+      // $dtTahun = rtrim($dt->tahun, $dt->semester);
       $sc = array(
         'id' => $dt->id_tahun,
-        'name' => $dtTahun.' Semester '.@$dt->semester_huruf,
+        'name' => $dt->tahun.' Semester '.@$dt->semester_huruf,
         'desc' => $dt->nama,
         'status' => $dt->proses_buka
       );
