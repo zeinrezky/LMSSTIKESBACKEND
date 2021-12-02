@@ -23,13 +23,31 @@ class CourseController extends Controller
       $schedule = $request->id_schedule;
     if($schedule){
       $tahun = Tahun::find($schedule);
+      // $pm = Pm::select('pengembang_materi.*','mk.mk_nama','mk.mk_kode','ca.ca_item')
+      //         ->where('id_semester',$tahun->semester)
+      //         ->leftJoin('matakuliah as mk','mk.id_matakuliah','pengembang_materi.id_matakuliah')
+      //         ->leftJoin('mapping_materi as mm','mm.id_pm','pengembang_materi.id_pm')
+      //         ->leftJoin('course_attribute as ca','ca.id_ca','mm.id_ca')
+      //         ->groupBy('pengembang_materi.id_pm')
+      //         ->get();
+              
       $pm = Pm::select('pengembang_materi.*','mk.mk_nama','mk.mk_kode','ca.ca_item')
-              ->where('id_semester',$tahun->semester)
+              ->where('id_semester',$schedule)
               ->leftJoin('matakuliah as mk','mk.id_matakuliah','pengembang_materi.id_matakuliah')
               ->leftJoin('mapping_materi as mm','mm.id_pm','pengembang_materi.id_pm')
               ->leftJoin('course_attribute as ca','ca.id_ca','mm.id_ca')
               ->groupBy('pengembang_materi.id_pm')
               ->get();
+
+      $all = Pm::select('pengembang_materi.*','mk.mk_nama','mk.mk_kode','ca.ca_item')
+              ->where('id_semester',$schedule)
+              ->leftJoin('matakuliah as mk','mk.id_matakuliah','pengembang_materi.id_matakuliah')
+              ->leftJoin('mapping_materi as mm','mm.id_pm','pengembang_materi.id_pm')
+              ->leftJoin('course_attribute as ca','ca.id_ca','mm.id_ca')
+              // ->groupBy('pengembang_materi.id_pm')
+              ->get();
+
+      return response()->json(['testing', 'pm' => $pm, 'all' => $all ], 200);
       $data = [];
       foreach($pm as $rPm){
         $course = array(
