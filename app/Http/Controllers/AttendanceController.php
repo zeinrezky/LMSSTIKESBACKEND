@@ -53,7 +53,7 @@ class AttendanceController extends Controller
       );
       $tahun = Tahun::find($schedule);
       $data = Attendance::where('id_mahasiswa',$user->id_user)
-                          ->where('pm.id_semester',$tahun->semester)
+                          ->where('pm.id_semester',$schedule)
                           ->select('attendance.attendance','attendance.total_absence','attendance.session_done','attendance.total_session','attendance.max_absence','attendance.id_attendance as id','mk.mk_nama as course_name','mk.mk_kode as course_code','ca.keterangan as course_desc','ca.ca_item as course_class','pm.id_semester as id_schedule')
                           ->leftJoin('pengembang_materi as pm','pm.id_matakuliah','attendance.id_course')
                           ->leftJoin('mapping_materi as mm','mm.id_pm','pm.id_pm')
