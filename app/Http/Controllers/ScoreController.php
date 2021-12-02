@@ -57,7 +57,7 @@ class ScoreController extends Controller
       );
       $tahun = Tahun::find($schedule);
       $data = Score::where('id_mahasiswa',$user->id_user)
-                          ->where('pm.id_semester',$tahun->semester)
+                          ->where('pm.id_semester',$schedule)
                           ->select('score.final_exam','score.assigment','score.forum_discussion','score.vc_attendance','score.quiz','score.final_score','score.grade','score.id_score as id','mk.mk_nama as course_name','mk.mk_kode as course_code','ca.keterangan as course_desc','ca.ca_item as course_class','pm.id_semester as id_schedule')
                           ->leftJoin('pengembang_materi as pm','pm.id_matakuliah','score.id_course')
                           ->leftJoin('mapping_materi as mm','mm.id_pm','pm.id_pm')
