@@ -67,6 +67,7 @@ class CourseController extends Controller
       $allBanget = Pm::get();
 
       return response()->json([ 'testing',
+        'auth' => $request->auth,
                                 'tahun' => $tahun, 
                                 'tahunId' => $tahun->id_tahun, 
                                 'schedule' => $schedule , 
