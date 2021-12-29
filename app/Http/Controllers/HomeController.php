@@ -30,7 +30,7 @@ class HomeController extends Controller
             $campus_about_limit = $request->campus_about;
 
         $knowledge = Knowledge::limit($knowledge_limit)->get();
-        $whatson = Whatson::limit($whatson_limit)->orderBy("id", "desc")->get();
+        $whatson = Whatson::limit($whatson_limit)->orderBy("id_whatson", "desc")->get();
         $campus_dir = Campus::limit($campus_directory_limit)->where('type', 'DIR')->get();
         $campus_about = Campus::limit($campus_about_limit)->where('type', 'ABOUT')->get();
         $announcement = Announcement::where('status', 'ACTIVE')->get();
