@@ -35,9 +35,9 @@ class SessionController extends Controller
         if ($course || $month || $tgl || $year) {
             $data = [];
             $dSess = Session::select('mapping_materi.*', 't.topic', 't.sub_topic', 'mk.mk_kode')
-                ->leftJoin('topic as t', 't.id_topic', 'mapping_materi.id_topic')
-                ->leftJoin('pengembang_materi as pm', 'pm.id_pm', 'mapping_materi.id_pm')
-                ->leftJoin('matakuliah as mk', 'mk.id_matakuliah', 'pm.id_matakuliah');
+                ->leftJoin('topic as t', 't.id_topic', '=', 'mapping_materi.id_topic')
+                ->leftJoin('pengembang_materi as pm', 'pm.id_pm', '=', 'mapping_materi.id_pm')
+                ->leftJoin('matakuliah as mk', 'mk.id_matakuliah', '=', 'pm.id_matakuliah');
             if ($course)
                 $dSess->where('mapping_materi.id_pm', $course);
             if ($tgl && $month && $year) {
@@ -48,6 +48,7 @@ class SessionController extends Controller
                 if ($year)
                     $dSess->whereRaw('YEAR(date_start) = ' . $year);
             }
+
             $dSess = $dSess->get();
             if (count($dSess) > 0) {
                 foreach ($dSess as $sess) {
@@ -55,7 +56,7 @@ class SessionController extends Controller
                         'id' => $sess->id_map,
                         'id_course' => $sess->id_pm,
                         // 'name' => $sess->sub_topic,
-                        'name' => $dSess->topic,
+                        'name' => $sess->topic,
                         'desc' => $sess->sub_topic,
                         'type' => $sess->type,
                         'date_start' => $sess->date_start,
