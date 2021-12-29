@@ -39,8 +39,10 @@ class CourseController extends Controller
                     'name' => $rPm->mk_nama,
                     'desc' => 'Semester ' . $tahun->semester . '/' . $rPm->mk_kode . ' - ' . $rPm->mk_nama,
                     'code' => $rPm->mk_kode,
-                    'type' => "Online Oke",
-                    'class' => ($rPm->ca_item) ? $this->initial($rPm->ca_item) : '-'
+                    // 'type' => ($rPm->ca_item) ? $rPm->ca_item : '-',
+                    // 'class' => ($rPm->ca_item) ? $this->initial($rPm->ca_item) : '-'
+                    'type' => ($rPm->ca_item) ? $rPm->ca_item : '-',
+                    'class' => ($rPm->ca_item) ? $rPm->ca_item : '-',
                 );
                 array_push($data, $course);
             }
