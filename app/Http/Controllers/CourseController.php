@@ -23,7 +23,7 @@ class CourseController extends Controller
         if ($schedule) {
             $tahun = Tahun::find($schedule);
 
-            $pm = Pm::select('pengembang_materi.*', 'mk.mk_nama', 'mk.mk_kode', 'ca.ca_item', "mm.type as type_materi")
+            $pm = Pm::select('pengembang_materi.*', 'mk.mk_nama', 'mk.mk_kode', 'ca.ca_item', "mm.type")
                 ->where('id_semester', $schedule)
                 ->leftJoin('matakuliah as mk', 'mk.id_matakuliah', 'pengembang_materi.id_matakuliah')
                 ->leftJoin('mapping_materi as mm', 'mm.id_pm', 'pengembang_materi.id_pm')
@@ -41,7 +41,7 @@ class CourseController extends Controller
                     'code' => $rPm->mk_kode,
                     // 'type' => ($rPm->ca_item) ? $rPm->ca_item : '-',
                     // 'class' => ($rPm->ca_item) ? $this->initial($rPm->ca_item) : '-'
-                    'type' => $pm->type_materi,
+                    'type' => $rPm->type,
                     'class' => ($rPm->ca_item) ? $rPm->ca_item : '-',
                 );
                 array_push($data, $course);
