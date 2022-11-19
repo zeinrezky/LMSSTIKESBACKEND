@@ -48,7 +48,33 @@ class SessionController extends Controller
                 if ($year)
                     $dSess->whereRaw('YEAR(date_start) = ' . $year);
             }
-
+            if($user->role == 'DOSEN'){
+                $dSess->leftJoin('mapping_pengajar','mapping_pengajar.id_pm','=','pm.id_pm');
+                $dSess->leftJoin('kelas','kelas.id_kelas','=','mapping_pengajar.id_kelas');
+                $dSess->where('mapping_pengajar.id_dosen',$user->id_user);
+            }
+            if($user->role == 'MAHASISWA'){
+                //Opsi 1
+                $dSess->leftJoin('mapping_kelas','mapping_kelas.id_pm','=','pm.id_pm');
+                $dSess->leftJoin('kelas','kelas.id_kelas','=','mapping_kelas.id_kelas');
+                $dSess->leftJoin('mahasiswa',function ($join) {
+                    $join->on('mahasiswa.id_semester','=','pm.id_semester');
+                    $join->on('mahasiswa.id_kelas','=','mapping_kelas.id_kelas');
+                });
+                //$query->leftJoin('mahasiswa','mahasiswa.id_semester','=','pengembang_materi.id_semester');
+                //$query->leftJoin(DB::raw('mapping_kelas as map_kelas'),'map_kelas.id_kelas','=','mahasiswa.id_kelas');
+                $dSess->where('mahasiswa.id_mahasiswa',$user->id_user);
+                //$query->whereRaw('map_kelas.id_kelas = mahasiswa.id_kelas');
+                //Opsi 2
+                // $query->select('pengembang_materi.*', 'mk.mk_nama', 'mk.mk_kode', 'ca.ca_item', "mm.type",'kelas.nama as nama_kelas','mm.class');
+                // $query->leftJoin('mapping_kelas','mapping_kelas.id_pm','=','pengembang_materi.id_pm');
+                // $query->leftJoin('mapping_mahasiswa','mapping_mahasiswa.id_mapping_kelas','=','mapping_kelas.id_map');
+                // $query->leftJoin('mahasiswa','mahasiswa.id_mahasiswa','=','mapping_mahasiswa.id_mahasiswa');
+                // $query->leftJoin('kelas','kelas.id_kelas','=','mapping_kelas.id_kelas');
+                // $query->leftJoin(DB::raw('mapping_kelas as map_kelas'),'map_kelas.id_kelas','=','mahasiswa.id_kelas');
+                // $query->where('pengembang_materi.id_semester',$schedule);
+                // $query->whereNotNull('mahasiswa.id_mahasiswa');
+            }
             $dSess = $dSess->get();
             if (count($dSess) > 0) {
                 foreach ($dSess as $sess) {

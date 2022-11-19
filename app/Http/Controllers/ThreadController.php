@@ -53,8 +53,11 @@ class ThreadController extends Controller
       }
       $listData->where('id_session',$session);
       $listData->select('thread.*');
-      $listData->selectRaw('IF(thread.id_poster = 1,"Dosen","Mahasiswa") as poster_name');
-      $listData->selectRaw('IF(thread.id_poster = 1,"Dosen","Mahasiswa") as role');
+      $listData->leftJoin('mahasiswa','mahasiswa.id_mahasiswa','=','thread.id_poster');
+      $listData->leftJoin('dosen','dosen.id_dosen','=','thread.id_poster');
+     // $listData->selectRaw('IF(thread.id_poster = 1,"Dosen","Mahasiswa") as poster_name');
+      $listData->selectRaw('IF(dosen.id_dosen is null, mahasiswa.nama,dosen.nama) as poster_name');
+      //$listData->selectRaw('IF(thread.id_poster = 1,"Dosen","Mahasiswa") as role');
       $listData->selectRaw('IF(thread.id_poster = 1,"https://lh3.googleusercontent.com/proxy/A5SANYdv6NATLj-ddkvvV0xkm_-4dqgOoD_9ipcOQCu6ME1n1RGXPYF0Qgdu5u_UyfXoROyKsHn4HBx0xnp1VXveqwFYBDM","https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png") as img');
       $listData = $listData->get();
       if ($search) {
@@ -95,7 +98,14 @@ class ThreadController extends Controller
   }
   public function create(Request $request){
     $dataCreate = $request->all();
+    $user = $request->auth;
     $dataCreate['date_post'] = date('Y-m-d H:i:s');
+    if($user->role == 'DOSEN'){
+      $dataCreate['role'] = 'dosen';
+    }
+    else{
+      $dataCreate['role'] = 'mahasiswa';
+    }
     $validate = Thread::validate($dataCreate);
     if ($validate['status']) {
       try {

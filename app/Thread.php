@@ -11,7 +11,7 @@ class Thread extends Model
   protected $primaryKey = 'id_thread';
   protected $table = 'thread';
   protected $fillable = [
-    'id_thread','id_poster','id_session','id_parent','id_reply_to','title','content','date_post','status','type','quote'
+    'id_thread','id_poster','id_session','id_parent','id_reply_to','title','content','date_post','status','type','quote','role'
   ];
   public $timestamps = false;
   

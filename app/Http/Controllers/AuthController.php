@@ -60,7 +60,7 @@ class AuthController extends Controller
             'id_user' => $dosen->id_dosen,
             'username' => $dosen->NIP,
             'name' => $dosen->nama,
-            'img' => 'http://cms.stikesrshusada.ac.id/images/user/'.$dosen->id_dosen.'.jpg',
+            'img' => 'http://192.168.1.11:8001/storage/contents/'.$dosen->foto,
             'user_code' => 'dsn'.$dosen->NIP,
             'role' => 'DOSEN'
           );
