@@ -66,7 +66,7 @@ class TopicController extends Controller
         );
         foreach($media as $m){
           if($m->jns_media == 'LINK')
-            $dtTop['link'] = $m->file_media;
+            $dtTop['link'] = $m->url_media;
           if($m->jns_media == 'UPLOAD')
             $dtTop['attachment'] = $m->file_media;
         }
