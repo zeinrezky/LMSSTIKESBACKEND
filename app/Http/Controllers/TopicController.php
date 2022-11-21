@@ -52,7 +52,7 @@ class TopicController extends Controller
       $sess = Session::find($session);
       $topic = Topic::where('id_topic',$sess->id_topic)->get();
       foreach($topic as $top){
-        $media = Media::select('mapping_media.*','mm.keterangan','mm.jns_media','mm.file_media')
+        $media = Media::select('mapping_media.*','mm.keterangan','mm.jns_media','mm.file_media','mm.url_media')
                 ->where('id_topic',$top->id_topic)
                 ->leftJoin('media_materi as mm','mm.id_media','mapping_media.id_media')
                 ->get();
