@@ -74,7 +74,7 @@ class CourseController extends Controller
                     // 'type' => ($rPm->ca_item) ? $rPm->ca_item : '-',
                     // 'class' => ($rPm->ca_item) ? $this->initial($rPm->ca_item) : '-'
                     'type' => $rPm->type?$rPm->type:'-',
-                    'class' => $rPm->class
+                    'class' => $rPm->class?$rPm->class:'-'
                 );
                 array_push($data, $course);
             }
